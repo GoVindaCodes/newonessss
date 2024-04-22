@@ -39,12 +39,13 @@ import ProductDrawer from "components/drawer/ProductDrawer";
 import ProductServices from "services/ProductServices";
 import useAsync from "hooks/useAsync";
 import requests from "services/httpService";
+import useFilter from "hooks/useFilter";
 // import categoryData from "utils/categories";
 const Products = () => {
   const { title, allId, serviceId, handleDeleteMany, handleUpdateMany } =
     useToggleDrawer();
   const { data, loading } = useAsync(ProductServices.getAllProducts);
-
+  const { dataTable, serviceData, globalSetting } = useFilter(data?.orders);
   // const data = { products: productData }
   //console.log("hi:", productData)
   const { t } = useTranslation();
@@ -61,8 +62,9 @@ const Products = () => {
     // sortedField,
     setSortedField,
     limitData,
+    // totalResults,
   } = useContext(SidebarContext);
-
+  // const { totalResults } = useFilter(data?.products);
   // const { data, loading } = useAsync(() =>
   //   ProductServices.getAllProducts({
   //     page: currentPage,
@@ -106,7 +108,10 @@ const Products = () => {
     };
     fetchCategories();
   }, []);
-  // console.log('productss',products)
+  // // console.log('productss', categories?.stock)
+  // const firstProductQuantity = categories.products[0].quantity;
+  // console.log(firstProductQuantity); // This will output 15
+
   // const {
   //   serviceData,
   //   filename,
@@ -275,12 +280,16 @@ const Products = () => {
                 isCheck={isCheck}
                 products={data?.products}
                 setIsCheck={setIsCheck}
-                currency={'$'}
+                globalSetting={globalSetting}
+                currency={globalSetting?.default_currency || "$"}
+                resultsPerPage={limitData}
               />
             </Table>
             <TableFooter>
               <Pagination
+                // totalResults={data?.products?.length}
                 totalResults={data?.products?.length}
+                // totalResults={totalResults}
                 resultsPerPage={limitData}
                 onChange={handleChangePage}
                 label="Product Page Navigation"

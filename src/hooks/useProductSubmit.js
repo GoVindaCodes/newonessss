@@ -270,7 +270,7 @@ const useProductSubmit = (id) => {
       setValue("productId");
 
       setProductId("");
-      // setValue('show');
+      setValue('show');
       setImageUrl([]);
       setTag([]);
       setVariants([]);
@@ -278,7 +278,7 @@ const useProductSubmit = (id) => {
       setValues({});
       setTotalStock(0);
       setSelectedCategory([]);
-      // setDefaultCategory([]);
+      setDefaultCategory([]);
       if (location.pathname === "/products") {
         resetRefTwo?.current?.resetSelectedValues();
       }

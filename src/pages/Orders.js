@@ -34,6 +34,7 @@ import requests from "services/httpService";
 
 const Orders = () => {
   const {
+    limitData,
     // time,
     setTime,
     // currentPage,
@@ -112,9 +113,9 @@ const Orders = () => {
       notifyError(err ? err?.response?.data?.message : err.message);
     }
   };
-  console.log("data in orders page", data);
-  console.log("data in data.orders page", data?.orders);
-  console.log("data in data table page", dataTable);
+  // console.log("data in orders page", data);
+  // console.log("data in data.orders page", data?.orders);
+  // console.log("data in data table page", dataTable);
   // const [coupons, setCoupons] = useState([]);
   // // console.log("allID : ", allId)
   // useEffect(() => {
@@ -238,13 +239,13 @@ const Orders = () => {
       </Card>
 
       {
-        // loading
-        false
+        loading
+          // false
           ? (
             <TableLoading row={12} col={7} width={160} height={20} />
           ) :
-          //  serviceData?.length !== 0 
-          true
+          data?.length !== 0
+            // true
             ? (
               <TableContainer className="mb-8 dark:bg-gray-900">
                 <Table>
@@ -262,6 +263,7 @@ const Orders = () => {
                   </TableHeader>
 
                   <OrderTable
+                    // data={data}
                     lang={lang}
                     orders={dataTable}
                     globalSetting={globalSetting}
@@ -270,19 +272,20 @@ const Orders = () => {
                 </Table>
 
                 <TableFooter>
-                  {/* <Pagination
-                    totalResults={data?.orders.length}
-                    resultsPerPage={2}
+                  {/* added by : Govinda 04/22/204 */}
+                  <Pagination
+                    totalResults={data?.orders?.length}
+                    resultsPerPage={limitData}
                     onChange={handleChangePage}
                     label="Table navigation"
-                  /> */}
+                  />
                   {/* this works  */}
-                  <Pagination
+                  {/* <Pagination
                     totalResults={data?.totalDoc}
                     resultsPerPage={handleChangePage}
                     onChange={handleChangePage}
                     label="Table navigation"
-                  />
+                  /> */}
                 </TableFooter>
               </TableContainer>
             ) : (

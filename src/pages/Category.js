@@ -57,7 +57,7 @@ const Category = () => {
     categoryRef,
     totalResults,
     resultsPerPage,
-    // dataTable,
+    dataTable,
     // serviceData,
     handleChangePage,
     // filename,
@@ -90,7 +90,7 @@ const Category = () => {
     setIsCheckAll(!isCheckAll);
 
     if (!isCheckAll) {
-      const selectedIds = categories.map(category => category._id);
+      const selectedIds = data.map(category => category._id);
       console.log("Selected IDs:", selectedIds);
       setIsCheck(selectedIds);
     } else {
@@ -99,27 +99,27 @@ const Category = () => {
     }
   };
 
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        console.log("Fetching categories...");
-        const response = await requests.get('/api/category/all');
-        console.log("Categories fetched successfully:", response);
-        setCategories(response);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-    fetchCategories();
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       console.log("Fetching categories...");
+  //       const response = await requests.get('/api/category/all');
+  //       console.log("Categories fetched successfully:", response);
+  //       setCategories(response);
+  //     } catch (error) {
+  //       console.error('Error fetching categories:', error);
+  //     }
+  //   };
+  //   fetchCategories();
 
-    // // Polling mechanism
-    // const intervalId = setInterval(fetchCategories, 1000); // Fetch every 5 seconds
+  // // Polling mechanism
+  // const intervalId = setInterval(fetchCategories, 1000); // Fetch every 5 seconds
 
-    // // Clear interval on unmount
-    // return () => clearInterval(intervalId);
-  }, []);
+  // // Clear interval on unmount
+  // return () => clearInterval(intervalId);
+  // }, []);
   // const handleSubmitCategory = () => { };
   // const categoryRef = useRef();
   // const handleChangePage = () => { };
@@ -132,7 +132,7 @@ const Category = () => {
       <BulkActionDrawer ids={allId} title="Categories" />
 
       <MainDrawer>
-        <CategoryDrawer id={serviceId} categories={categories} lang={lang} />
+        <CategoryDrawer id={serviceId} categories={data} lang={lang} />
       </MainDrawer>
 
       <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
@@ -249,7 +249,7 @@ const Category = () => {
                   data={data}
                   lang={lang}
                   isCheck={isCheck}
-                  categories={categories}
+                  categories={dataTable}
                   setIsCheck={setIsCheck}
                   showChild={showChild}
                 />
@@ -257,7 +257,8 @@ const Category = () => {
 
               <TableFooter>
                 <Pagination
-                  totalResults={totalResults}
+                  // totalResults={totalResults}
+                  totalResults={data?.length}
                   resultsPerPage={resultsPerPage}
                   onChange={handleChangePage}
                   label="Table navigation"
